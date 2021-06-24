@@ -7,10 +7,10 @@ const rewrites = async () => {
           {
             type: 'cookie',
             key: 'branch',
-            value: 'main'
+            value: 'challenger'
           }
         ],
-        destination: '/:path*'
+        destination: '/challenger'
       },
       {
         source: '/:path*/',
@@ -18,10 +18,10 @@ const rewrites = async () => {
           {
             type: 'cookie',
             key: 'branch',
-            value: 'abtest_*'
+            value: 'main'
           }
         ],
-        destination: 'https://hogehoge.com/:path*'
+        destination: '/original'
       },
       {
         source: '/:path*/',

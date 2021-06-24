@@ -1,10 +1,14 @@
 import { GetServerSideProps } from 'next'
 import { VFC } from 'react'
-import { setCookie, parseCookies } from 'nookies'
+import { setCookie } from 'nookies'
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  console.log(parseCookies(ctx))
-  setCookie(ctx, 'branch', 'main', { path: '/' })
+  setCookie(
+    ctx,
+    'branch',
+    Math.floor(Math.random() * 2) ? 'main' : 'challenger',
+    { path: '/' }
+  )
   ctx.res.writeHead(302, { Location: '/' })
   ctx.res.end()
 
@@ -14,7 +18,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 }
 
 const Challenge: VFC = () => {
-  return <div>aaaaaaaaaaaaaaaa</div>
+  return null
 }
 
 export default Challenge
