@@ -14,7 +14,7 @@ const Home: FC = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          ORIGINAL
+          CHALLENGER
         </h1>
 
         <p className={styles.description}>
