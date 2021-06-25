@@ -33,7 +33,7 @@ const defaultOptions = {
   branchMappings: {},
   rootPage: 'top',
   mainBranch: 'main',
-  active: process.env.VERCEL_ENV !== 'production'
+  active: process.env.VERCEL_ENV === 'production'
 }
 
 const nextWithSplitTest = (options, nextConfig = {}) => {
