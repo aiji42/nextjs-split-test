@@ -1,6 +1,8 @@
 const execSync = require('child_process').execSync
 
 const rewrites = async () => {
+  if (process.env.VERCEL_ENV !== 'production') return {}
+
   // git branch -r --no-merge
   const res = execSync('git branch -r')
   const challengers = res.toString().match(/abtest_(.+)/g)
