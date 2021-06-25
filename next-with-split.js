@@ -6,7 +6,7 @@ const rule = (source, destination, additional = {}) => ({
 const has = (value = 'original') => [
   {
     type: 'cookie',
-    key: 'branch',
+    key: 'next-with-split',
     value
   }
 ]
@@ -23,7 +23,7 @@ const makeRewrites = (mappings, rootPage, active) => async () => {
           rule('/:path*/', `${origin}/:path*`, { has: has(branch) })
         ])
         .flat(),
-      rule('/:path*/', '/_split-test-challenge')
+      rule('/:path*/', '/_split-challenge')
     ]
   }
 }
@@ -35,9 +35,9 @@ const defaultOptions = {
   active: process.env.VERCEL_ENV === 'production'
 }
 
-const nextWithSplitTest = (args) => {
-  const { splitTest, ...nextConfig } = args
-  const options = { ...defaultOptions, ...(splitTest ?? {}) }
+const nextWithSplit = (args) => {
+  const { splits, ...nextConfig } = args
+  const options = { ...defaultOptions, ...(splits ?? {}) }
   const mappings = { [options.mainBranch]: '', ...options.branchMappings }
 
   if (options.active && Object.keys(mappings).length > 1) {
@@ -62,4 +62,4 @@ const nextWithSplitTest = (args) => {
   }
 }
 
-module.exports = nextWithSplitTest
+module.exports = nextWithSplit

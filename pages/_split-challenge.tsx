@@ -7,7 +7,7 @@ const branches: string[] = JSON.parse(process.env.SPLIT_TEST_BRANCHES ?? '[]')
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   setCookie(
     ctx,
-    'branch',
+    'next-with-split',
     branches[Math.floor(Math.random() * branches.length)],
     { path: '/' }
   )
@@ -19,8 +19,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 }
 
-const _challenge: VFC = () => {
+const SplitChallenge: VFC = () => {
   return null
 }
 
-export default _challenge
+export default SplitChallenge
