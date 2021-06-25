@@ -11,8 +11,8 @@ const has = (value = 'original') => [
   }
 ]
 
-const makeRewrites = (mappings, rootPage) => async () => {
-  if (process.env.VERCEL_ENV !== 'production') return [rule('/', `/${rootPage}`)]
+const makeRewrites = (mappings, rootPage, active) => async () => {
+  if (active) return [rule('/', `/${rootPage}`)]
   if (!mappings || !Object.keys(mappings).length)
     return [rule('/', `/${rootPage}`)]
 
@@ -32,7 +32,8 @@ const makeRewrites = (mappings, rootPage) => async () => {
 const defaultOptions = {
   branchMappings: {},
   rootPage: 'top',
-  mainBranch: 'main'
+  mainBranch: 'main',
+  active: process.env.VERCEL_ENV !== 'production'
 }
 
 const nextWithSplitTest = (options, nextConfig = {}) => {
@@ -46,7 +47,7 @@ const nextWithSplitTest = (options, nextConfig = {}) => {
     },
     trailingSlash: true,
     assetPrefix: mappings[process.env.VERCEL_GIT_COMMIT_REF] ?? '',
-    rewrites: makeRewrites(mappings, opt.rootPage)
+    rewrites: makeRewrites(mappings, opt.rootPage, opt.active)
   }
 }
 
