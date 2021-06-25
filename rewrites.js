@@ -41,7 +41,7 @@ const rewrites = async () => {
             value: challenger
           }
         ],
-        destination: `/top`
+        destination: `https://nextjs-split-test-git-abtestchallenger-aiji42.vercel.app/:path*`
       })),
       ...challengers.map((challenger) => ({
         source: '/:path*/',
