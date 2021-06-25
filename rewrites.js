@@ -1,16 +1,25 @@
+const execSync = require('child_process').execSync
+
 const rewrites = async () => {
+  // git branch -r --no-merge
+  const res = execSync('git branch -r')
+  const challengers = res.toString().match(/abtest_(.+)/g)
+  if (!challengers) return {}
+
+  console.log(challengers)
+
   return {
     beforeFiles: [
       {
-        source: '/:path*/',
+        source: '/',
         has: [
           {
             type: 'cookie',
             key: 'branch',
-            value: 'challenger'
+            value: 'main'
           }
         ],
-        destination: '/challenger'
+        destination: '/top'
       },
       {
         source: '/:path*/',
@@ -21,8 +30,30 @@ const rewrites = async () => {
             value: 'main'
           }
         ],
-        destination: '/original'
+        destination: '/:path*'
       },
+      ...challengers.map((challenger) => ({
+        source: '/',
+        has: [
+          {
+            type: 'cookie',
+            key: 'branch',
+            value: challenger
+          }
+        ],
+        destination: `/top`
+      })),
+      ...challengers.map((challenger) => ({
+        source: '/:path*/',
+        has: [
+          {
+            type: 'cookie',
+            key: 'branch',
+            value: challenger
+          }
+        ],
+        destination: `/:path*`
+      })),
       {
         source: '/:path*/',
         destination: '/challenge'

@@ -6,10 +6,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   setCookie(
     ctx,
     'branch',
-    Math.floor(Math.random() * 2) ? 'main' : 'challenger',
+    Math.floor(Math.random() * 2) ? 'main' : 'abtest_challenger',
     { path: '/' }
   )
-  ctx.res.writeHead(302, { Location: '/' })
+  ctx.res.writeHead(302, { Location: ctx.req.url ?? '/' })
   ctx.res.end()
 
   return {
@@ -17,8 +17,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 }
 
-const Challenge: VFC = () => {
+const challenge: VFC = () => {
   return null
 }
 
-export default Challenge
+export default challenge
