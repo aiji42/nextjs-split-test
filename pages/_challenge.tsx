@@ -2,11 +2,13 @@ import { GetServerSideProps } from 'next'
 import { VFC } from 'react'
 import { setCookie } from 'nookies'
 
+const splitTests: string[] = JSON.parse(process.env.SPLIT_TESTS ?? '[]')
+
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   setCookie(
     ctx,
     'branch',
-    Math.floor(Math.random() * 2) ? 'main' : 'abtest_challenger',
+    splitTests[Math.floor(Math.random() * splitTests.length)],
     { path: '/' }
   )
   ctx.res.writeHead(302, { Location: ctx.req.url ?? '/' })
@@ -17,8 +19,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 }
 
-const challenge: VFC = () => {
+const _challenge: VFC = () => {
   return null
 }
 
-export default challenge
+export default _challenge
