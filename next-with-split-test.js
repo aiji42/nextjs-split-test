@@ -71,7 +71,7 @@ const nextWithSplitTest = (abtests, rootPage, nextConfig = {}) => {
       SPLIT_TESTS: JSON.stringify(['original', ...Object.keys(abtests ?? {})])
     },
     trailingSlash: true,
-
+    assetPrefix: abtests[process.env.VERCEL_GIT_COMMIT_REF] ?? '',
     rewrites: makeRewrites(abtests, rootPage)
   }
 }
