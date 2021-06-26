@@ -1,7 +1,7 @@
 const { findPageFile } = require('next/dist/server/lib/find-page-file')
 const { findPagesDir } = require('next/dist/lib/find-pages-dir')
 
-const chalk  = require('chalk')
+const chalk = require('chalk')
 
 const prefixes = {
   wait: chalk.cyan('wait') + '  -',
@@ -44,10 +44,15 @@ const makeRewrites = (mappings, rootPage, active) => async () => {
   return {
     beforeFiles: [
       ...Object.entries(mappings)
-        .map(([branch, origin]) => [
-          rule('/', `${origin}/${rootPage}/`, { has: has(branch) }),
-          rule('/:path*/', `${origin}/:path*`, { has: has(branch) })
-        ])
+        .map(([branch, origin]) =>
+          [
+            rule('/', `${origin}/${rootPage}/`, { has: has(branch) }),
+            rule('/:path*/', `${origin}/:path*`, { has: has(branch) }),
+            origin
+              ? rule('/:path*', `${origin}/:path*`, { has: has(branch) })
+              : null
+          ].filter(Boolean)
+        )
         .flat(),
       rule('/:path*/', '/_split-challenge')
     ]
@@ -67,26 +72,28 @@ const nextWithSplit = (args) => {
   const mappings = { [options.mainBranch]: '', ...options.branchMappings }
 
   const pagesDir = findPagesDir('')
-  findPageFile(findPagesDir(''), 'index', ['tsx', 'jsx', 'js', 'ts']).then((res) => {
-    if (!res) return
-    error(
-      `You cannot use ${pagesDir}/${res} when using \`next-with-split\`. Please rename it to something else, such as ${pagesDir}/top.tsx.`
-    )
-    console.log(
-      `1. Rename ${pagesDir}/${res} (Example: ${pagesDir}/root${res.slice(
-        res.lastIndexOf('.')
-      )}).`
-    )
-    console.log(`2. Use the \`rootPage\` property of nextWithSplit.`)
-    console.log(`
+  findPageFile(findPagesDir(''), 'index', ['tsx', 'jsx', 'js', 'ts']).then(
+    (res) => {
+      if (!res) return
+      error(
+        `You cannot use ${pagesDir}/${res} when using \`next-with-split\`. Please rename it to something else, such as ${pagesDir}/top.tsx.`
+      )
+      console.log(
+        `1. Rename ${pagesDir}/${res} (Example: ${pagesDir}/root${res.slice(
+          res.lastIndexOf('.')
+        )}).`
+      )
+      console.log(`2. Use the \`rootPage\` property of nextWithSplit.`)
+      console.log(`
     withSplit({
       splits: {
         rootPage: 'root', // default value is 'top'
         branchMappings: {...}
       }
     }`)
-    process.exit(1)
-  })
+      process.exit(1)
+    }
+  )
 
   if ('trailingSlash' in nextConfig && !nextConfig.trailingSlash) {
     warn(
