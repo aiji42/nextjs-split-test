@@ -111,6 +111,7 @@ const nextWithSplit = (args) => {
       SPLIT_TEST_BRANCHES: JSON.stringify(Object.keys(mappings))
     },
     trailingSlash: true,
+    assetPrefix: mappings[process.env.VERCEL_GIT_COMMIT_REF ?? ''] ?? '',
     rewrites: makeRewrites(mappings, options.rootPage, options.active)
   }
 }
