@@ -46,8 +46,7 @@ const makeRewrites = (mappings, rootPage, active) => async () => {
       ...Object.entries(mappings)
         .map(([branch, origin]) => [
           rule('/', `${origin}/${rootPage}/`, { has: has(branch) }),
-          rule('/:path*/', `${origin}/:path*`, { has: has(branch) }),
-          rule('/:path*', `${origin}/:path*`, { has: has(branch) })
+          rule('/:path*/', `${origin}/:path*`, { has: has(branch) })
         ])
         .flat(),
       rule('/:path*/', '/_split-challenge')
