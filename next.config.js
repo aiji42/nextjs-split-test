@@ -5,8 +5,7 @@ module.exports = withSplit({
     branchMappings: {
       abtest_challenger:
         'https://nextjs-split-test-git-abtestchallenger-aiji42.vercel.app'
-    },
-    active: true
+    }
   },
   reactStrictMode: true
 })
