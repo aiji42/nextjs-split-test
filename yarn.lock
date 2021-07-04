@@ -1931,6 +1931,13 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
 
+next-with-split@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/next-with-split/-/next-with-split-2.0.0.tgz#5137f4e3f015451f99bbbb7d17c2b7708a7787e3"
+  integrity sha512-QSQrmUM9BMUDc/JJTY1qhtVUmePCuNEH1ROa7DvuSfmM1lMRXb55sA+FEG8z21Ec+n/1zV1qBQ5glN6btRyESg==
+  dependencies:
+    nookies "^2.5.2"
+
 next@11.0.1:
   version "11.0.1"
   resolved "https://registry.yarnpkg.com/next/-/next-11.0.1.tgz#b8e3914d153aaf7143cb98c09bcd3c8230eeb17a"
