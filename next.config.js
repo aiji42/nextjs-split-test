@@ -1,5 +1,11 @@
-const withSplit = require('next-with-split')
+const { withSplit } = require('next-with-split')
 
 module.exports = withSplit({
-  reactStrictMode: true
+  reactStrictMode: true,
+  rewrites: async () => ([
+    {
+      source: '/foo/:path*',
+      destination: '/foo/bar'
+    }
+  ])
 })
